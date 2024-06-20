@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RequestCollection;
 use App\Models\HospitalRequestModel;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class HospitalRequestController extends Controller
      */
     public function index()
     {
-        return response("Get all Requests");
+        return new RequestCollection(HospitalRequestModel::all());
     }
 
     /**

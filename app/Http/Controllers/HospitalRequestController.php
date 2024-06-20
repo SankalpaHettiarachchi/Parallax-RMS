@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Priority;
+use App\Enums\Status;
+use App\Http\Requests\RequestCreateRequest;
 use App\Http\Resources\RequestCollection;
 use App\Models\HospitalRequestModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HospitalRequestController extends Controller
 {
@@ -27,9 +31,13 @@ class HospitalRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RequestCreateRequest $RequestCreateRequest)
     {
-        return response("Add new Request");
+        $RequestCreateRequest->Validated($RequestCreateRequest->all());
+        $new_request = DB::table('hospital_request_models')->insertGetId($RequestCreateRequest->all());
+        $new_request = HospitalRequestModel::findOrFail($new_request);
+        return new RequestCollection(collect([$new_request]));
+
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class RequestResource extends JsonResource
 {
@@ -18,8 +19,8 @@ class RequestResource extends JsonResource
             'id' => $this->id,
             'location' => $this->location,
             'service' => $this->service,
-            'status' => $this->status,
-            'priority' => $this->priority,
+            'status' => Str::upper($this->status),
+            'priority' => Str::upper($this->priority),
             'department' => $this->department,
             'requested_by' => $this->requested_by,
             'assigned_by' => $this->assigned_by,

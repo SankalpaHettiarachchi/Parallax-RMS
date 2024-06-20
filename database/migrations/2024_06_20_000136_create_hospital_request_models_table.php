@@ -1,7 +1,5 @@
 <?php
 
-use App\Enums\Status;
-use App\Enums\Priority;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('hospital_request_models', function (Blueprint $table) {
             $table->id();
-            
+
             $table->string('location');
             $table->string('service');
-            $table->string('status')->default(Status::NEW->value);
-            $table->string('priority')->default(Priority::LOW->value);
+            $table->enum('status', ['new', 'in progress','on hold','rejected','cancelled'])->default('new');
+            $table->enum('priority', ['high', 'medium','low'])->default('low');
             $table->string('department');
             $table->string('requested_by');
             $table->string('assigned_by');

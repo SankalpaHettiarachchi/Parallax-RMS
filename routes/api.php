@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ApiRequestController;
 use App\Http\Controllers\HospitalRequestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

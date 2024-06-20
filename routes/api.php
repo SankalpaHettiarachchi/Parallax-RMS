@@ -8,4 +8,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('/requests',HospitalRequestController::class);
+Route::apiResource('/request',HospitalRequestController::class);

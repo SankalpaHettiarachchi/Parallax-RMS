@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestCreateRequest;
+use App\Http\Requests\RequetsUpdateRequest;
 use App\Http\Resources\RequestCollection;
 use App\Models\HospitalRequestModel;
 use Illuminate\Http\Request;
@@ -21,36 +22,38 @@ class HospitalRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RequestCreateRequest $RequestCreateRequest)
+    public function store(RequestCreateRequest $request)
     {
-        $RequestCreateRequest->Validated($RequestCreateRequest->all());
-        $new_request = DB::table('hospital_request_models')->insertGetId($RequestCreateRequest->all());
-        $new_request = HospitalRequestModel::findOrFail($new_request);
-        return new RequestCollection(collect([$new_request]));
+        $request->Validated($request->all());
+        $new_request = DB::table('hospital_request_models')->insertGetId($request->all());
+        return new RequestCollection(collect([HospitalRequestModel::findOrFail($new_request)]));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($RequestId)
+    public function show(HospitalRequestModel $request)
     {
-        $request = HospitalRequestModel::findOrFail($RequestId);
         return new RequestCollection(collect([$request]));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, HospitalRequestModel $hospitalRequestModel)
+    public function update(RequetsUpdateRequest $request,$id)
     {
-        return response("Update a Request");
+        $request->Validated($request);
+        DB::table('hospital_request_models')->where('id',$id)->update($request->all());
+        $updated_request = HospitalRequestModel::findOrFail($id);
+        return new RequestCollection(collect([$updated_request]));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(HospitalRequestModel $hospitalRequestModel)
+    public function destroy(HospitalRequestModel $request)
     {
-        return response("Delete a Request");
+        HospitalRequestModel::destroy($request->id);
+        return response('Request Deleted');
     }
 }

@@ -22,13 +22,13 @@ class RequetsUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'location'=> 'required','string',
-            'service'=> 'required','string',
+            'location'=> 'string',
+            'service'=> 'string',
             'status'=> 'string',
             'priority'=> 'string',
-            'department'=> 'required','string',
-            'requested_by'=> 'required','string',
-            'assigned_by'=> 'required','string',
+            'department'=> 'string',
+            'requested_by'=> 'string',
+            'assigned_by'=> 'string',
         ];
     }
 }

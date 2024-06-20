@@ -8,30 +8,42 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+
+
 </script>
 
 <template>
-    <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+    <div class="main-view">
+        <div class="min-h-screen bg-gray-100 ">
+            <nav class="nav-bar">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto ">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
-                                    />
-                                </Link>
+                            <div class="shrink-0 flex items-center text-white brand">
+                                e-hospital
                             </div>
 
-                            <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </NavLink>
+                            <div class="nav-link-section">
+                                <!-- Navigation Links -->
+                                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex nav-link-bar">
+                                    <NavLink class="nav-item" :href="route('dashboard')">
+                                        <span class="nav-text">Dashboard</span>
+                                    </NavLink>
+                                    <NavLink class="nav-item active" :href="route('dashboard')" :active="route().current('dashboard')">
+                                        <span class="nav-text">Requests</span>
+                                    </NavLink>
+                                    <NavLink class="nav-item" :href="route('dashboard')">
+                                        <span class="nav-text">Reports</span>
+                                    </NavLink>
+                                    <NavLink class="nav-item" :href="route('dashboard')">
+                                        <span class="nav-text">Feedbackes</span>
+                                    </NavLink>
+                                    <NavLink class="nav-item" :href="route('dashboard')">
+                                        <span class="nav-text">Settings</span>
+                                    </NavLink>
+                                </div>
                             </div>
                         </div>
 
@@ -137,8 +149,8 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <header class="bg-white shadow request-header" v-if="$slots.header">
+                <div class="max-w-7xl mx-auto py-6">
                     <slot name="header" />
                 </div>
             </header>

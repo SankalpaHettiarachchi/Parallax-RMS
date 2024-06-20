@@ -1,3 +1,92 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Ciutadella_reguler';
+    src: url('../fonts/Ciutadella Regular.ttf');
+}
+
+.main-view{
+    font-family: 'Ciutadella_reguler', sans-serif ;
+}
+.brand{
+    color: #ffff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+}
+
+.nav-bar{
+    background-color: #830823 ;
+}
+.nav-link-section{
+    padding-top: 15px;
+    margin-left: 45px;
+}
+.nav-item.active {
+    padding: 8px 12px 8px 12px;
+    border-radius: 6px 6px 6px 6px;
+    background: #FFFFFF;
+}
+.nav-item.active .nav-text {
+    color: #830823;
+}
+.nav-text{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    text-align: left;
+    color: #ffff;
+}
+
+.request-header{
+    width: Fixed (1,440px)px;
+    height: Hug (174px)px;
+    top: 60px;
+    padding: 30px 50px 30px 50px;
+    gap: 0px;
+    border: 0px 0px 1px 0px;
+    justify: space-between;
+    opacity: 0px;
+}
+.add-new-btn{
+    background-color: #830823;
+}
+.info-circle{
+    width: 114px;
+    height: 114px;
+}
+.info-count{
+    font-size: 40px;
+    font-weight: 600;
+}
+.info-desc{
+    font-size: 14px;
+    margin: 5px 50px 0 50px;
+    text-align: center;
+}
+.circle1{
+    background-color: #FFE2E8;
+}
+.circle2{
+    background-color: #CCF5BB;
+}
+.circle3{
+    background-color: #D0EEFF;
+}
+.circle4{
+    background-color: #D2D4FF;
+}
+
+.table-heading{
+    background-color: #C19C27;
+    font: #D0EEFF;
+}
+.table-heading{
+    color: #FFFFFF;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 12px;
+}

@@ -6,7 +6,6 @@ use App\Http\Requests\RequestCreateRequest;
 use App\Http\Requests\RequetsUpdateRequest;
 use App\Http\Resources\RequestCollection;
 use App\Models\HospitalRequestModel;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HospitalRequestController extends Controller

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Priority;
-use App\Enums\Status;
 use App\Http\Requests\RequestCreateRequest;
 use App\Http\Resources\RequestCollection;
 use App\Models\HospitalRequestModel;
@@ -21,14 +19,6 @@ class HospitalRequestController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return response("Create Request View");
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(RequestCreateRequest $RequestCreateRequest)
@@ -37,23 +27,15 @@ class HospitalRequestController extends Controller
         $new_request = DB::table('hospital_request_models')->insertGetId($RequestCreateRequest->all());
         $new_request = HospitalRequestModel::findOrFail($new_request);
         return new RequestCollection(collect([$new_request]));
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(HospitalRequestModel $hospitalRequestModel)
+    public function show($RequestId)
     {
-        return response("Get a Request");
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(HospitalRequestModel $hospitalRequestModel)
-    {
-        return response("View for update a Request");
+        $request = HospitalRequestModel::findOrFail($RequestId);
+        return new RequestCollection(collect([$request]));
     }
 
     /**

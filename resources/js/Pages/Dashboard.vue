@@ -21,14 +21,32 @@ const updateRequestData = ref(null);
 
 const errorMessage = ref(null);
 
+const newRequestsCount = ref(null);
+const inProgressRequestsCount = ref(null);
+const onHoldRequestsCount = ref(null);
+const cancelledRequestsCount = ref(null);
+
 // GET-ALL---------------------------------------------------
 const getRequests = async () => {
     let url = 'http://127.0.0.1:8000/api/request';
-    await axios.get(url).then(response => {
-        requests.value = response.data.data;
-    }).catch(error => {
-        console.log(error);
-    });
+
+    try {
+        const response = await axios.get(url);
+        const all_requests = response.data.data;
+        requests.value = all_requests;
+
+        const count = all_requests.length;
+
+        newRequestsCount.value = all_requests.filter(request => request.status === 'NEW').length;
+        inProgressRequestsCount.value = all_requests.filter(request => request.status === 'IN PROGRESS').length;
+        onHoldRequestsCount.value = all_requests.filter(request => request.status === 'ON HOLD').length;
+        cancelledRequestsCount.value = all_requests.filter(request => request.status === 'CANCELLED').length;
+
+        return count;
+    } catch (error) {
+        console.error('Error fetching requests:', error);
+        return 0; // Return 0 or handle the error as needed
+    }
 };
 
 // UPDATE----------------------------------------------------
@@ -119,19 +137,19 @@ onMounted(() => {
 
                 <div class="flex items-center space-x-2">
                     <div class="w-4 h-4 rounded-full info-circle circle1 flex flex-col items-center justify-center">
-                        <span class="info-count text-xl">10</span>
+                        <span class="info-count text-xl">{{ newRequestsCount }}</span>
                         <span class="info-desc text-xs mt-1">New Requests</span>
                     </div>
                     <div class="w-4 h-4 rounded-full info-circle circle2 flex flex-col items-center justify-center">
-                        <span class="info-count text-xl">05</span>
-                        <span class="info-desc text-xs mt-1">Delayed Requests</span>
+                        <span class="info-count text-xl">{{ inProgressRequestsCount }}</span>
+                        <span class="info-desc text-xs mt-1">InProgresss Requests</span>
                     </div>
                     <div class="w-4 h-4 rounded-full info-circle circle3 flex flex-col items-center justify-center">
-                        <span class="info-count text-xl">02</span>
-                        <span class="info-desc text-xs mt-1">Escalated Requests</span>
+                        <span class="info-count text-xl">{{ onHoldRequestsCount }}</span>
+                        <span class="info-desc text-xs mt-1">onHoldRequestsCount Requests</span>
                     </div>
                     <div class="w-4 h-4 rounded-full info-circle circle4 flex flex-col items-center justify-center">
-                        <span class="info-count text-xl">00</span>
+                        <span class="info-count text-xl">{{ cancelledRequestsCount }}</span>
                         <span class="info-desc text-xs mt-1">On Hold Requests</span>
                     </div>
                 </div>
@@ -311,6 +329,8 @@ onMounted(() => {
             :show="showDeleteModal"
             model_name = "Delete Model"
             @close="showDeleteModal = false"
+            @confirm = "deleteRequest"
+
         />
 
         <!-- Us Addrequest Modal Component -->

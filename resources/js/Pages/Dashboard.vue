@@ -12,11 +12,14 @@ import axios from 'axios';
 const requests = ref([]);
 
 const showDeleteModal = ref(false);
+
 const showAddRequestModal = ref(false);
 const showUpdateRequestModal = ref(false);
 
 const deleteRequestId = ref(null);
 const updateRequestData = ref(null);
+
+const errorMessage = ref(null);
 
 // GET-ALL---------------------------------------------------
 const getRequests = async () => {
@@ -33,11 +36,28 @@ const updateRequest = (request) => {
     updateRequestData.value = request;
     showUpdateRequestModal.value = true;
 };
-const updateThisRequest = async () => {
-    let url = `http://127.0.0.1:8000/api/request/${updateRequestId.value}`;
-    await axios.patch(url).then(response => {
+const handleUpdateRequest = async (formData) => {
+    const id = updateRequestData.value.id;
+    console.log(formData)
+    await updateThisRequest(id,formData);
+};
+const updateThisRequest = async (id,formData) => {
+    let url = `http://127.0.0.1:8000/api/request/${id}`;
+    // Convert formData to URLSearchParams
+    const urlEncodedData = new URLSearchParams();
+    for (const key in formData) {
+        if (formData.hasOwnProperty(key)) {
+            urlEncodedData.append(key, formData[key]);
+        }
+    }
+    await axios.patch(url, urlEncodedData, {
+        headers: {
+            'Accept': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }).then(response => {
         getRequests();
-        showDeleteModal.value = false;
+        showUpdateRequestModal.value = false;
     }).catch(error => {
         console.log(error);
     });
@@ -72,7 +92,8 @@ const addRequest = async (formData) => {
         getRequests();
         showAddRequestModal.value = false;
     }).catch(error => {
-        console.log(error);
+        errorMessage.value = error.message;
+        showAddRequestModal.value = true;
     });
 };
 
@@ -120,7 +141,7 @@ onMounted(() => {
         <div class="bg-gray-100">
             <div class="mx-auto max-w-7xl">
                 <div>
-                    <div class="flex flex-col justify-between sm:flex-row mt-6">
+                    <!-- <div class="flex flex-col justify-between sm:flex-row mt-6">
                         <div class="relative text-sm text-gray-800 col-span-3">
                             <input
                                 type="text"
@@ -130,7 +151,7 @@ onMounted(() => {
                                 class="block rounded-lg border-0 py-2 pl-10 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="mt-4 flex flex-col">
                         <div
@@ -280,7 +301,7 @@ onMounted(() => {
         <AddRequestModel
             :show="showAddRequestModal"
             model_name = "Add New Request Model"
-            message="Are you sure you want to delete this request?"
+            :message="errorMessage"
             @close="showAddRequestModal = false"
             @confirm = "handleAddRequest"
 
@@ -289,18 +310,16 @@ onMounted(() => {
         <ConfirmModel
             :show="showDeleteModal"
             model_name = "Delete Model"
-            message="Are you sure you want to delete this request?"
             @close="showDeleteModal = false"
-            @confirm="deleteRequest"
         />
 
         <!-- Us Addrequest Modal Component -->
         <UpdateRequestModel
             :show="showUpdateRequestModal"
+            :updateRequestData="updateRequestData"
             model_name = "Update Request Model"
-            message="Are you sure you want to delete this request?"
             @close="showUpdateRequestModal = false"
-            @confirm="updateThisRequest"
+            @confirm="handleUpdateRequest"
         />
     </AuthenticatedLayout>
 </template>

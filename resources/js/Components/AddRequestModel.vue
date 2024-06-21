@@ -65,9 +65,9 @@
                             <select required="required" v-model="formData.status" id="status" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
                              dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="">Select staus</option>
-                                <option value="New">New</option>
-                                <option value="in_progress">In Progress</option>
-                                <option value="on_hold">On Hold</option>
+                                <option value="new">New</option>
+                                <option value="in progress">In Progress</option>
+                                <option value="on hold">On Hold</option>
                                 <option value="rejected">Rejected</option>
                                 <option value="cancelled">Cancelled</option>
                             </select>
@@ -88,7 +88,8 @@
                              dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
                         </div>
                     </div>
-                    <div class="flex justify-end"> <!-- Flex container to align items to the right -->
+                    <div class="flex justify-end">
+                        <span class="text-red-500">{{ message }}</span>
                         <button @click="close" type="button" class="text-white font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center model-cancel-btn"><span class="model-cancel-text">Cancel</span></button>
                         <button type="submit" class="text-white font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center model-submit-btn">
                             <span class="model-submit-text">Submit</span>

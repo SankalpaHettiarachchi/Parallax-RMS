@@ -17,12 +17,11 @@
                 </div>
 
                 <!-- Modal body -->
-                <form class="p-4 md:p-5" @submit.prevent="handleSubmit">
+                <form class="p-4 md:p-5" @submit.prevent="updateRequest">
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="category" class="block mb-2 text-sm font-bold">Location</label>
-                            <select required="required" v-model="formData.location" id="location" name="location" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
-                             dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <label for="location" class="block mb-2 text-sm font-bold">Location</label>
+                            <select ref="location" v-model="updateRequestData.location" id="location" name="location" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="">Select location</option>
                                 <option value="F103-Bed">F103-Bed</option>
                                 <option value="F104-Bed">F104-Bed</option>
@@ -31,9 +30,8 @@
                             </select>
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="category" class="block mb-2 text-sm font-bold">Department</label>
-                            <select required="required" v-model="formData.department" id="department" name="department" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
-                             dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <label for="department" class="block mb-2 text-sm font-bold">Department</label>
+                            <select ref="department" v-model="updateRequestData.department" id="department" name="department" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="">Select department</option>
                                 <option value="Patient Experience">Patient Experience</option>
                                 <option value="Operaration">Operaration</option>
@@ -41,9 +39,8 @@
                             </select>
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="category" class="block mb-2 text-sm font-bold">Requested By</label>
-                            <select required="required" v-model="formData.requested_by" id="requested_by" name="requested_by" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
-                             dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <label for="requested_by" class="block mb-2 text-sm font-bold">Requested By</label>
+                            <select ref="requested_by" v-model="updateRequestData.requested_by" id="requested_by" name="requested_by" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="">Select</option>
                                 <option value="Hasan Ali">Hasan Ali</option>
                                 <option value="Miles Cremin">Miles Cremin</option>
@@ -51,9 +48,8 @@
                             </select>
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="category" class="block mb-2 text-sm font-bold">Assigned To</label>
-                            <select required="required" v-model="formData.assigned_by" id="assigned_by" name="assigned_by" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
-                             dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <label for="assigned_by" class="block mb-2 text-sm font-bold">Assigned To</label>
+                            <select ref="assigned_by" v-model="updateRequestData.assigned_by" id="assigned_by" name="assigned_by" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="">Select</option>
                                 <option value="Hasan Ali">Hasan Ali</option>
                                 <option value="Miles Cremin">Miles Cremin</option>
@@ -61,21 +57,19 @@
                             </select>
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="category" class="block mb-2 text-sm font-bold">Status</label>
-                            <select required="required" v-model="formData.status" id="status" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
-                             dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <option value="">Select staus</option>
-                                <option value="New">New</option>
-                                <option value="in_progress">In Progress</option>
-                                <option value="on_hold">On Hold</option>
+                            <label for="status" class="block mb-2 text-sm font-bold">Status</label>
+                            <select ref="status" v-model="updateRequestData.status" id="status" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="">Select status</option>
+                                <option value="new">New</option>
+                                <option value="in progress">In Progress</option>
+                                <option value="on hold">On Hold</option>
                                 <option value="rejected">Rejected</option>
                                 <option value="cancelled">Cancelled</option>
                             </select>
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="category" class="block mb-2 text-sm font-bold">Priority</label>
-                            <select required="required" v-model="formData.priority" id="priority" name="priority" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
-                             dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <label for="priority" class="block mb-2 text-sm font-bold">Priority</label>
+                            <select ref="priority" v-model="updateRequestData.priority" id="priority" name="priority" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="">Select</option>
                                 <option value="high">High</option>
                                 <option value="medium">Medium</option>
@@ -83,9 +77,8 @@
                             </select>
                         </div>
                         <div class="col-span-2">
-                            <label for="name" class="block mb-2 text-sm font-bold">Service</label>
-                            <input type="text" v-model="formData.service" id="service" name="service" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5
-                             dark:border-gray-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
+                            <label for="service" class="block mb-2 text-sm font-bold">Service</label>
+                            <input ref="service" type="text" v-model="updateRequestData.service" id="service" name="service" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:border-gray-500 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required>
                         </div>
                     </div>
                     <div class="flex justify-end"> <!-- Flex container to align items to the right -->
@@ -105,7 +98,8 @@ export default {
     props: {
         show: Boolean,
         model_name:String,
-        message: String
+        message: String,
+        updateRequestData: Object
     },
     data() {
         return {
@@ -120,15 +114,32 @@ export default {
             }
         };
     },
+
     methods: {
         close() {
             this.$emit('close');
         },
-        handleSubmit(){
-            this.$emit('confirm', { ...this.formData });
-            this.close();
+        updateRequest() {
+            // Emit an event with formData to updateThisRequest method in parent component
+            this.formData.location = this.$refs.location.value;
+            this.formData.department = this.$refs.department.value;
+            this.formData.requested_by = this.$refs.requested_by.value;
+            this.formData.assigned_by = this.$refs.assigned_by.value;
+            this.formData.status = this.$refs.status.value;
+            this.formData.priority = this.$refs.priority.value;
+            this.formData.service = this.$refs.service.value;
+
+            this.$emit('confirm',this.formData);
         }
+    },
+    watch: {
+    'updateRequestData.status': function(newVal) {
+      this.updateRequestData.status = newVal.toLowerCase();
+    },
+    'updateRequestData.priority': function(newVal) {
+      this.updateRequestData.priority = newVal.toLowerCase();
     }
+  },
 };
 </script>
 

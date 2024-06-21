@@ -132,6 +132,8 @@ import { Head } from '@inertiajs/vue3';
                                         </thead>
                                         <tbody
                                             class="divide-y divide-gray-200 bg-white"
+                                            v-for = "request in requests "
+                                            :key="request.id"
                                         >
                                             <tr>
                                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6"
@@ -141,47 +143,47 @@ import { Head } from '@inertiajs/vue3';
                                                 <td
                                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6"
                                                 >
-                                                JHGGW123
+                                                {{request.id}}
                                                 </td>
                                                 <td
                                                     class="whitespace-nowrap px-3 py-4 text-sm "
                                                 >
-                                                14/01/20
+                                                {{request.created_on}}
                                                 </td>
                                                 <td
                                                     class="whitespace-nowrap px-3 py-4 text-sm "
                                                 >
-                                                HGFD123
+                                                {{request.location}}
                                                 </td>
                                                 <td
                                                     class="whitespace-nowrap px-3 py-4 text-sm "
                                                 >
-                                                Call me
+                                                {{request.service}}
                                                 </td>
                                                 <td
                                                     class="whitespace-nowrap px-3 py-4 text-sm "
                                                 >
-                                                New
+                                                {{request.status}}
                                                 </td>
                                                 <td
                                                     class="whitespace-nowrap px-3 py-4 text-sm "
                                                 >
-                                                Patient Experience
+                                                {{request.department}}
                                                 </td>
                                                 <td
                                                     class="whitespace-nowrap px-3 py-4 text-sm "
                                                 >
-                                                Hasan Ali
+                                                {{request.assigned_by}}
                                                 </td>
                                                 <td
                                                     class="whitespace-nowrap px-3 py-4 text-sm "
                                                 >
-                                                Mohammed
+                                                {{request.requested_by}}
                                                 </td>
                                                 <td
                                                     class="whitespace-nowrap px-3 py-4 text-sm "
                                                 >
-                                                HIGH
+                                                {{request.priority}}
                                                 </td>
 
                                                 <td
@@ -205,3 +207,32 @@ import { Head } from '@inertiajs/vue3';
         </div>
     </AuthenticatedLayout>
 </template>
+
+<script>
+
+import axios from 'axios';
+
+export default{
+        name:'Request List',
+        data(){
+            return {
+                requests:Array
+            }
+        },
+        created(){
+            this.getRequests();
+        },
+        methods:{
+            async getRequests(){
+                let url = 'http://127.0.0.1:8000/api/request';
+                await axios.get(url).then(response =>{
+                    this.requests = response.data.data;
+                    console.log(this.requests);
+                }).catch(error=>{
+                    console.log(error)
+                });
+            }
+        }
+    }
+
+</script>

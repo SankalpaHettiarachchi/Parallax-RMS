@@ -15,8 +15,7 @@ class HospitalRequestController extends Controller
      */
     public function index()
     {
-        $requests_data =  new RequestCollection(HospitalRequestModel::all());
-        return inertia('dashboard');
+        return new RequestCollection(HospitalRequestModel::all());
     }
 
     /**

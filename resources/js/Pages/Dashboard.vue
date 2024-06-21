@@ -16,8 +16,9 @@ const showAddRequestModal = ref(false);
 const showUpdateRequestModal = ref(false);
 
 const deleteRequestId = ref(null);
-const updateRequestId = ref(null);
+const updateRequestData = ref(null);
 
+// GET-ALL---------------------------------------------------
 const getRequests = async () => {
     let url = 'http://127.0.0.1:8000/api/request';
     await axios.get(url).then(response => {
@@ -27,35 +28,10 @@ const getRequests = async () => {
     });
 };
 
-const confirmDelete = (id) => {
-    deleteRequestId.value = id;
-    showDeleteModal.value = true;
-};
-const addNewRequest = () => {
-    showAddRequestModal.value = true;
-};
-const updateRequest = (id) => {
-    updateRequestId.value = id;
+// UPDATE----------------------------------------------------
+const updateRequest = (request) => {
+    updateRequestData.value = request;
     showUpdateRequestModal.value = true;
-};
-
-const deleteRequest = async () => {
-    let url = `http://127.0.0.1:8000/api/request/${deleteRequestId.value}`;
-    await axios.delete(url).then(response => {
-        getRequests();
-        showDeleteModal.value = false;
-    }).catch(error => {
-        console.log(error);
-    });
-};
-const addRequest = async () => {
-    let url = `http://127.0.0.1:8000/api/request/`;
-    await axios.post(url).then(response => {
-        getRequests();
-        showModal.value = false;
-    }).catch(error => {
-        console.log(error);
-    });
 };
 const updateThisRequest = async () => {
     let url = `http://127.0.0.1:8000/api/request/${updateRequestId.value}`;
@@ -67,6 +43,38 @@ const updateThisRequest = async () => {
     });
 };
 
+// DELETE----------------------------------------------------
+const confirmDelete = (id) => {
+    deleteRequestId.value = id;
+    showDeleteModal.value = true;
+};
+const deleteRequest = async () => {
+    let url = `http://127.0.0.1:8000/api/request/${deleteRequestId.value}`;
+    await axios.delete(url).then(response => {
+        getRequests();
+        showDeleteModal.value = false;
+    }).catch(error => {
+        console.log(error);
+    });
+};
+
+// ADD-NEW----------------------------------------------------
+const addNewRequest = () => {
+    showAddRequestModal.value = true;
+};
+const handleAddRequest = async (formData) => {
+  console.log(formData);
+  await addRequest(formData);
+};
+const addRequest = async (formData) => {
+    let url = `http://127.0.0.1:8000/api/request/`;
+    await axios.post(url,formData).then(response => {
+        getRequests();
+        showAddRequestModal.value = false;
+    }).catch(error => {
+        console.log(error);
+    });
+};
 
 onMounted(() => {
     getRequests();
@@ -75,7 +83,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head title="Request" />
+    <Head title="Request"/>
     <AuthenticatedLayout>
         <template #header>
             <div class="flex items-center justify-between">
@@ -250,7 +258,7 @@ onMounted(() => {
                                                     </button>
                                                     <button
                                                         class="ml-2 text-indigo-600 hover:text-indigo-900"
-                                                        @click.prevent="updateRequest(request.id)"
+                                                        @click.prevent="updateRequest(request)"
                                                     >
                                                         edit
                                                     </button>
@@ -268,18 +276,16 @@ onMounted(() => {
             </div>
         </div>
 
-
-        <!-- Use Delete Modal Component -->
+        <!-- Us Addrequest Modal Component -->
         <AddRequestModel
             :show="showAddRequestModal"
             model_name = "Add New Request Model"
             message="Are you sure you want to delete this request?"
             @close="showAddRequestModal = false"
-            @confirm = "addRequest"
+            @confirm = "handleAddRequest"
 
         />
-
-        <!-- Us Addrequest Modal Component -->
+        <!-- Use Delete Modal Component -->
         <ConfirmModel
             :show="showDeleteModal"
             model_name = "Delete Model"

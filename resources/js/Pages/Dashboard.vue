@@ -2,19 +2,90 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import Pagination from "@/Components/Pagination.vue";
-import { ref, watch, computed } from "vue";
-import { Link, router, useForm, usePage } from "@inertiajs/vue3";
+import ConfirmModel from '@/Components/ConfirmModel.vue';
+import AddRequestModel from '@/Components/AddRequestModel.vue';
+import UpdateRequestModel from '@/Components/UpdateRequestModel.vue';
+
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+const requests = ref([]);
+
+const showDeleteModal = ref(false);
+const showAddRequestModal = ref(false);
+const showUpdateRequestModal = ref(false);
+
+const deleteRequestId = ref(null);
+const updateRequestId = ref(null);
+
+const getRequests = async () => {
+    let url = 'http://127.0.0.1:8000/api/request';
+    await axios.get(url).then(response => {
+        requests.value = response.data.data;
+    }).catch(error => {
+        console.log(error);
+    });
+};
+
+const confirmDelete = (id) => {
+    deleteRequestId.value = id;
+    showDeleteModal.value = true;
+};
+const addNewRequest = () => {
+    showAddRequestModal.value = true;
+};
+const updateRequest = (id) => {
+    updateRequestId.value = id;
+    showUpdateRequestModal.value = true;
+};
+
+const deleteRequest = async () => {
+    let url = `http://127.0.0.1:8000/api/request/${deleteRequestId.value}`;
+    await axios.delete(url).then(response => {
+        getRequests();
+        showDeleteModal.value = false;
+    }).catch(error => {
+        console.log(error);
+    });
+};
+const addRequest = async () => {
+    let url = `http://127.0.0.1:8000/api/request/`;
+    await axios.post(url).then(response => {
+        getRequests();
+        showModal.value = false;
+    }).catch(error => {
+        console.log(error);
+    });
+};
+const updateThisRequest = async () => {
+    let url = `http://127.0.0.1:8000/api/request/${updateRequestId.value}`;
+    await axios.patch(url).then(response => {
+        getRequests();
+        showDeleteModal.value = false;
+    }).catch(error => {
+        console.log(error);
+    });
+};
+
+
+onMounted(() => {
+    getRequests();
+});
+
 </script>
 
 <template>
     <Head title="Request" />
-
     <AuthenticatedLayout>
         <template #header>
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
                     <h1 class="font-semibold text-3xl text-gray-800 leading-tight">Requests</h1>
-                    <button class="ml-10 px-4 py-2 bg-blue-500 text-white rounded add-new-btn ">+ New Request</button>
+                    <button
+                        class="ml-10 px-4 py-2 bg-blue-500 text-white rounded add-new-btn "
+                        @click.prevent="addNewRequest()"
+
+                    >+ New Request</button>
                 </div>
 
                 <div class="flex items-center space-x-2">
@@ -28,7 +99,7 @@ import { Link, router, useForm, usePage } from "@inertiajs/vue3";
                     </div>
                     <div class="w-4 h-4 rounded-full info-circle circle3 flex flex-col items-center justify-center">
                         <span class="info-count text-xl">02</span>
-                        <span class="info-desc text-xs mt-1">Escalted Requests</span>
+                        <span class="info-desc text-xs mt-1">Escalated Requests</span>
                     </div>
                     <div class="w-4 h-4 rounded-full info-circle circle4 flex flex-col items-center justify-center">
                         <span class="info-count text-xl">00</span>
@@ -40,7 +111,7 @@ import { Link, router, useForm, usePage } from "@inertiajs/vue3";
 
         <div class="bg-gray-100">
             <div class="mx-auto max-w-7xl">
-                <div class="">
+                <div>
                     <div class="flex flex-col justify-between sm:flex-row mt-6">
                         <div class="relative text-sm text-gray-800 col-span-3">
                             <input
@@ -136,122 +207,94 @@ import { Link, router, useForm, usePage } from "@inertiajs/vue3";
                                         </thead>
                                         <tbody
                                             class="divide-y divide-gray-200 bg-white"
-                                            v-for = "request in requests "
+                                            v-for="(request, index) in requests"
                                             :key="request.id"
                                         >
                                             <tr>
-                                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6"
-                                                >
-                                                1
+                                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
+                                                {{ index + 1 }}
                                                 </td>
-                                                <td
-                                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6"
-                                                >
-                                                {{request.id}}
+                                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
+                                                {{ request.id }}
                                                 </td>
-                                                <td
-                                                    class="whitespace-nowrap px-3 py-4 text-sm "
-                                                >
-                                                {{request.created_on}}
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                                {{ request.created_on }}
                                                 </td>
-                                                <td style="max-width: 200px;"
-                                                    class="whitespace-normal px-3 py-4 text-sm break-all"
-                                                >
-                                                {{request.location}}
+                                                <td style="max-width: 200px;" class="whitespace-normal px-3 py-4 text-sm break-all">
+                                                {{ request.location }}
                                                 </td>
-                                                <td
-                                                    class="whitespace-nowrap px-3 py-4 text-sm "
-                                                >
-                                                {{request.service}}
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                                {{ request.service }}
                                                 </td>
-                                                <td
-                                                    class="whitespace-nowrap px-3 py-4 text-sm "
-                                                >
-                                                {{request.status}}
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                                {{ request.status }}
                                                 </td>
-                                                <td
-                                                    class="whitespace-nowrap px-3 py-4 text-sm "
-                                                >
-                                                {{request.department}}
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                                {{ request.department }}
                                                 </td>
-                                                <td
-                                                    class="whitespace-nowrap px-3 py-4 text-sm "
-                                                >
-                                                {{request.assigned_by}}
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                                {{ request.requested_by }}
                                                 </td>
-                                                <td
-                                                    class="whitespace-nowrap px-3 py-4 text-sm "
-                                                >
-                                                {{request.requested_by}}
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                                {{ request.assigned_by }}
                                                 </td>
-                                                <td
-                                                    class="whitespace-nowrap px-3 py-4 text-sm "
-                                                >
-                                                {{request.priority}}
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                                {{ request.priority }}
                                                 </td>
-
-                                                <td
-                                                    class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
-                                                >
+                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                                     <button
                                                         class="ml-2 text-indigo-600 hover:text-indigo-900"
-                                                        @click.prevent="deleteRequest(request.id)"
-                                                        >
+                                                        @click.prevent="confirmDelete(request.id)"
+                                                    >
                                                         Delete
                                                     </button>
+                                                    <button
+                                                        class="ml-2 text-indigo-600 hover:text-indigo-900"
+                                                        @click.prevent="updateRequest(request.id)"
+                                                    >
+                                                        edit
+                                                    </button>
+
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <Pagination
-                                />
+                                <Pagination />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+        <!-- Use Delete Modal Component -->
+        <AddRequestModel
+            :show="showAddRequestModal"
+            model_name = "Add New Request Model"
+            message="Are you sure you want to delete this request?"
+            @close="showAddRequestModal = false"
+            @confirm = "addRequest"
+
+        />
+
+        <!-- Us Addrequest Modal Component -->
+        <ConfirmModel
+            :show="showDeleteModal"
+            model_name = "Delete Model"
+            message="Are you sure you want to delete this request?"
+            @close="showDeleteModal = false"
+            @confirm="deleteRequest"
+        />
+
+        <!-- Us Addrequest Modal Component -->
+        <UpdateRequestModel
+            :show="showUpdateRequestModal"
+            model_name = "Update Request Model"
+            message="Are you sure you want to delete this request?"
+            @close="showUpdateRequestModal = false"
+            @confirm="updateThisRequest"
+        />
     </AuthenticatedLayout>
 </template>
-
-<script>
-
-import axios from 'axios';
-
-export default{
-
-        name:'Request List',
-        data(){
-            return {
-                requests:Array
-            }
-        },
-        created(){
-            this.getRequests();
-        },
-        methods:{
-            async getRequests(){
-                let url = 'http://127.0.0.1:8000/api/request';
-                await axios.get(url).then(response =>{
-                    this.requests = response.data.data;
-                    console.log(this.requests);
-                }).catch(error=>{
-                    console.log(error)
-                });
-            },
-            async deleteRequest(id){
-                let url = `http://127.0.0.1:8000/api/request/${id}`;
-                if(confirm('Are you sure !')){
-                        await axios.delete(url).then(response =>{
-                        this.getRequests();
-                    }).catch(error=>{
-                        console.log(error)
-                    });
-                }
-
-            }
-        }
-    }
-
-</script>

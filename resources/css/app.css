@@ -90,3 +90,41 @@
     font-size: 14px;
     line-height: 12px;
 }
+.model-header{
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: left;
+}
+
+.model-cancel-btn{
+    width: Hug (79px)px;
+    height: Hug (36px)px;
+    padding: 10px 16px 10px 16px;
+    gap: 8px;
+    opacity: 0px;
+    margin-right: 10px;
+    background-color: #f5eced;
+}
+
+.model-submit-btn{
+    width: Hug (79px)px;
+    height: Hug (36px)px;
+    padding: 10px 16px 10px 16px;
+    gap: 8px;
+    opacity: 0px;
+    background-color: #830823;
+}
+.model-submit-text{
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: left;
+}
+.model-cancel-text{
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: left;
+    color: #830823;
+}

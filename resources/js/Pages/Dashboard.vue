@@ -1,6 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import Pagination from "@/Components/Pagination.vue";
+import { ref, watch, computed } from "vue";
+import { Link, router, useForm, usePage } from "@inertiajs/vue3";
 </script>
 
 <template>
@@ -11,8 +14,9 @@ import { Head } from '@inertiajs/vue3';
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
                     <h1 class="font-semibold text-3xl text-gray-800 leading-tight">Requests</h1>
-                    <button class="ml-10 px-4 py-2 bg-blue-500 text-white rounded add-new-btn">+ New Request</button>
+                    <button class="ml-10 px-4 py-2 bg-blue-500 text-white rounded add-new-btn ">+ New Request</button>
                 </div>
+
                 <div class="flex items-center space-x-2">
                     <div class="w-4 h-4 rounded-full info-circle circle1 flex flex-col items-center justify-center">
                         <span class="info-count text-xl">10</span>
@@ -199,6 +203,8 @@ import { Head } from '@inertiajs/vue3';
                                         </tbody>
                                     </table>
                                 </div>
+                                <Pagination
+                                />
                             </div>
                         </div>
                     </div>
@@ -224,7 +230,7 @@ export default{
         },
         methods:{
             async getRequests(){
-                let url = 'http://127.0.0.1:8000/api/request';
+                let url = 'http://127.0.0.1:8000/api/request?page=2';
                 await axios.get(url).then(response =>{
                     this.requests = response.data.data;
                     console.log(this.requests);

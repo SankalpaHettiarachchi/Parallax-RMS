@@ -23,7 +23,7 @@ class HospitalRequestModelFactory extends Factory
         $ran_priority = array('low','medium','high');
 
         return [
-            'location' => fake()->address,
+            'location' => substr(fake()->address,2,10),
             'service' => fake()->sentence(3),
             'department' => $ran_department[array_rand($ran_department, 1)],
             'status' => $ran_status[array_rand($ran_status, 1)],

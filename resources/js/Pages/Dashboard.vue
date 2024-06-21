@@ -154,8 +154,8 @@ import { Link, router, useForm, usePage } from "@inertiajs/vue3";
                                                 >
                                                 {{request.created_on}}
                                                 </td>
-                                                <td
-                                                    class="whitespace-nowrap px-3 py-4 text-sm "
+                                                <td style="max-width: 200px;"
+                                                    class="whitespace-normal px-3 py-4 text-sm break-all"
                                                 >
                                                 {{request.location}}
                                                 </td>
@@ -195,7 +195,8 @@ import { Link, router, useForm, usePage } from "@inertiajs/vue3";
                                                 >
                                                     <button
                                                         class="ml-2 text-indigo-600 hover:text-indigo-900"
-                                                    >
+                                                        @click.prevent="deleteRequest(request.id)"
+                                                        >
                                                         Delete
                                                     </button>
                                                 </td>
@@ -219,6 +220,7 @@ import { Link, router, useForm, usePage } from "@inertiajs/vue3";
 import axios from 'axios';
 
 export default{
+
         name:'Request List',
         data(){
             return {
@@ -230,13 +232,24 @@ export default{
         },
         methods:{
             async getRequests(){
-                let url = 'http://127.0.0.1:8000/api/request?page=2';
+                let url = 'http://127.0.0.1:8000/api/request';
                 await axios.get(url).then(response =>{
                     this.requests = response.data.data;
                     console.log(this.requests);
                 }).catch(error=>{
                     console.log(error)
                 });
+            },
+            async deleteRequest(id){
+                let url = `http://127.0.0.1:8000/api/request/${id}`;
+                if(confirm('Are you sure !')){
+                        await axios.delete(url).then(response =>{
+                        this.getRequests();
+                    }).catch(error=>{
+                        console.log(error)
+                    });
+                }
+
             }
         }
     }

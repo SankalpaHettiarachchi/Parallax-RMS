@@ -125,7 +125,7 @@ onMounted(() => {
     <Head title="Request"/>
     <AuthenticatedLayout>
         <template #header>
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between sub-header">
                 <div class="flex items-center">
                     <h1 class="font-semibold text-3xl text-gray-800 leading-tight">Requests</h1>
                     <button
@@ -133,9 +133,10 @@ onMounted(() => {
                         @click.prevent="addNewRequest()"
 
                     >+ New Request</button>
+
                 </div>
 
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-2 circle-set">
                     <div class="w-4 h-4 rounded-full info-circle circle1 flex flex-col items-center justify-center">
                         <span class="info-count text-xl">{{ newRequestsCount }}</span>
                         <span class="info-desc text-xs mt-1">New Requests</span>
@@ -146,7 +147,7 @@ onMounted(() => {
                     </div>
                     <div class="w-4 h-4 rounded-full info-circle circle3 flex flex-col items-center justify-center">
                         <span class="info-count text-xl">{{ onHoldRequestsCount }}</span>
-                        <span class="info-desc text-xs mt-1">onHoldRequestsCount Requests</span>
+                        <span class="info-desc text-xs mt-1">OnHold Requests</span>
                     </div>
                     <div class="w-4 h-4 rounded-full info-circle circle4 flex flex-col items-center justify-center">
                         <span class="info-count text-xl">{{ cancelledRequestsCount }}</span>
@@ -154,12 +155,13 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
+
         </template>
 
         <div class="bg-gray-100">
             <div class="mx-auto max-w-7xl">
                 <div>
-                    <!-- <div class="flex flex-col justify-between sm:flex-row mt-6">
+                    <div class="flex flex-col justify-between sm:flex-row mt-6">
                         <div class="relative text-sm text-gray-800 col-span-3">
                             <input
                                 type="text"
@@ -169,11 +171,11 @@ onMounted(() => {
                                 class="block rounded-lg border-0 py-2 pl-10 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="mt-4 flex flex-col">
                         <div
-                            class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8"
+                            class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 table-area"
                         >
                             <div
                                 class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
@@ -258,7 +260,7 @@ onMounted(() => {
                                             :key="request.id"
                                         >
                                             <tr>
-                                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
+                                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium table-area">
                                                 {{ index + 1 }}
                                                 </td>
                                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">
@@ -267,26 +269,48 @@ onMounted(() => {
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm">
                                                 {{ request.created_on }}
                                                 </td>
-                                                <td style="max-width: 200px;" class="whitespace-normal px-3 py-4 text-sm break-all">
+                                                <td class="whitespace-normal px-3 py-4 text-sm break-all">
                                                 {{ request.location }}
                                                 </td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm table-area">
                                                 {{ request.service }}
                                                 </td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
-                                                {{ request.status }}
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm table-area">
+                                                    <label v-if="request.status === 'NEW'" class="status" style="background-color: #FFF1AC;">
+                                                        {{ request.status }}
+                                                    </label>
+                                                    <label v-if="request.status === 'IN PROGRESS'" class="status" style="background-color: #E1F5E7;">
+                                                        {{ request.status }}
+                                                    </label>
+                                                    <label v-if="request.status === 'ON HOLD'" class="status" style="background-color: #F9E1E1;">
+                                                        {{ request.status }}
+                                                    </label>
+                                                    <label v-if="request.status === 'REJECTED'" class="status" style="background-color: #FFE9D4;">
+                                                        {{ request.status }}
+                                                    </label>
+                                                    <label v-if="request.status === 'CANCELLED'" class="status" style="background-color: #E1ECE4;">
+                                                        {{ request.status }}
+                                                    </label>
                                                 </td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm table-area">
                                                 {{ request.department }}
                                                 </td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm table-area">
                                                 {{ request.requested_by }}
                                                 </td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm table-area">
                                                 {{ request.assigned_by }}
                                                 </td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm">
-                                                {{ request.priority }}
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm table-area">
+                                                    <label v-if="request.priority === 'HIGH'" class="status" style="background-color: #FCD9D9;">
+                                                        • {{ request.priority }}
+                                                    </label>
+                                                    <label v-if="request.priority === 'MEDIUM'" class="status" style="background-color: #FFD261;">
+                                                        • {{ request.priority }}
+                                                    </label>
+                                                    <label v-if="request.priority === 'LOW'" class="status" style="background-color: #58C42B;">
+                                                        • {{ request.priority }}
+                                                    </label>
                                                 </td>
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                                     <button
@@ -307,7 +331,6 @@ onMounted(() => {
                                         </tbody>
                                     </table>
                                 </div>
-                                <Pagination />
                             </div>
                         </div>
                     </div>

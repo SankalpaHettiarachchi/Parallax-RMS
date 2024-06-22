@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Ciutadella_reguler';
+    src: url('../fonts/Ciutadella Regular.ttf');
+}
+
+.main-view{
+    font-family: 'Ciutadella_reguler', sans-serif ;
+}
+.brand{
+    color: #ffff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+}
+
+.nav-bar{
+    background-color: #830823 ;
+}
+.nav-link-section{
+    padding-top: 15px;
+    margin-left: 45px;
+}
+.nav-item.active {
+    padding: 8px 12px 8px 12px;
+    border-radius: 6px 6px 6px 6px;
+    background: #FFFFFF;
+}
+.nav-item.active .nav-text {
+    color: #830823;
+}
+.nav-text{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    text-align: left;
+    color: #ffff;
+}
+
+.request-header{
+    width: Fixed (1,440px)px;
+    height: Hug (174px)px;
+    top: 60px;
+    padding: 30px 50px 30px 50px;
+    gap: 0px;
+    border: 0px 0px 1px 0px;
+    opacity: 0px;
+}
+.add-new-btn{
+    background-color: #830823;
+}
+.info-circle{
+    width: 114px;
+    height: 114px;
+}
+.info-count{
+    font-size: 40px;
+    font-weight: 600;
+}
+.info-desc{
+    font-size: 14px;
+    margin: 5px 50px 0 50px;
+    text-align: center;
+}
+.circle1{
+    background-color: #FFE2E8;
+}
+.circle2{
+    background-color: #CCF5BB;
+}
+.circle3{
+    background-color: #D0EEFF;
+}
+.circle4{
+    background-color: #D2D4FF;
+}
+
+.table-heading{
+    background-color: #C19C27;
+    font: #D0EEFF;
+}
+.table-heading{
+    color: #FFFFFF;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 12px;
+}
+.model-header{
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: left;
+}
+
+.model-cancel-btn{
+    width: Hug (79px)px;
+    height: Hug (36px)px;
+    padding: 10px 16px 10px 16px;
+    gap: 8px;
+    opacity: 0px;
+    margin-right: 10px;
+    background-color: #f5eced;
+}
+
+.model-submit-btn{
+    width: Hug (79px)px;
+    height: Hug (36px)px;
+    padding: 10px 16px 10px 16px;
+    gap: 8px;
+    opacity: 0px;
+    background-color: #830823;
+}
+.model-submit-text{
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: left;
+}
+.model-cancel-text{
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: left;
+    color: #830823;
+}
+.statu-new{
+    background-color: #FFF1AC;
+    width: Hug (31px)px;
+    height: Fixed (14px)px;
+    padding: 2px 6px 2px 6px;
+    gap: 4px;
+    border-radius: 4px;
+    opacity: 5px;
+}
+.status{
+    width: Hug (31px)px;
+    height: Fixed (14px)px;
+    padding: 2px 6px 2px 6px;
+    gap: 4px;
+    border-radius: 4px;
+    opacity: 5px;
+}
+
+@media (max-width: 575.98px) {
+    .main-view{
+        margin: 0px;
+    }
+    .info-count{
+        font-size: 20px;
+    }
+    .info-desc{
+        margin: 0;
+        font-size: 10px;
+    }
+    .info-circle{
+        width: 63px;
+        height: 63px;
+    }
+    .circle-set{
+        margin-top: 30px;
+    }
+    .table-area{
+        margin: 5px;
+    }
+    .sub-header{
+        display: grid;
+    }
+}
+
+@media (min-width: 576px) {
+
+}
+
+@media (min-width: 768px) {
+
+}
+
+@media (min-width: 992px) {
+    /* CSS rules */
+}
+
+@media (min-width: 1200px) {
+    /* CSS rules */
+}

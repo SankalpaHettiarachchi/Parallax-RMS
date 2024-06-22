@@ -151,7 +151,7 @@ onMounted(() => {
                     </div>
                     <div class="w-4 h-4 rounded-full info-circle circle4 flex flex-col items-center justify-center">
                         <span class="info-count text-xl">{{ cancelledRequestsCount }}</span>
-                        <span class="info-desc text-xs mt-1">On Hold Requests</span>
+                        <span class="info-desc text-xs mt-1">Cancelled Requests</span>
                     </div>
                 </div>
             </div>
@@ -178,7 +178,7 @@ onMounted(() => {
                             class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 table-area"
                         >
                             <div
-                                class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
+                                class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8 lg:pb-10"
                             >
                                 <div
                                     class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg relative"
@@ -325,7 +325,6 @@ onMounted(() => {
                                                     >
                                                         edit
                                                     </button>
-
                                                 </td>
                                             </tr>
                                         </tbody>

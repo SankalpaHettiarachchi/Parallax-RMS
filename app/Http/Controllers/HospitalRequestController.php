@@ -15,7 +15,7 @@ class HospitalRequestController extends Controller
      */
     public function index()
     {
-        return new RequestCollection(HospitalRequestModel::paginate(10));
+        return new RequestCollection(HospitalRequestModel::all());
     }
 
     /**
